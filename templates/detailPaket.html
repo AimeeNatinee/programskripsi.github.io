@@ -1,0 +1,96 @@
+<!-- Menampilkan modal di analyzerPacket.html-->
+{% for row in detailPaket %}
+<table class="display table table-borderless table-responsive">
+    <tr>
+        <td>IP Source</td>
+        <td>:</td>
+        <td>{{row[1]}}</td>
+    </tr>
+    <tr>
+        <td>Port Source</td>
+        <td>:</td>
+        <td>{{row[2]}}</td>
+    </tr>
+    <tr>
+        <td>IP Destination</td>
+        <td>:</td>
+        <td>{{row[3]}}</td>
+    </tr>
+    <tr>
+        <td>Port Destination</td>
+        <td>:</td>
+        <td>{{row[4]}}</td>
+    </tr>
+    {% if 'DNS' in row[5]%}
+        <tr>
+            <td>Protocol</td>
+            <td>:</td>
+            <td>{{row[5]}}</td>
+        </tr>
+        <tr>
+            <td>Arrival Time</td>
+            <td>:</td>
+            <td>{{row[6]}}</td>
+        </tr>
+        <tr>
+            <td>Domain</td>
+            <td>:</td>
+            <td>{{row[7]}}</td>
+        </tr>
+        <tr>
+            <td>Tipe Situs</td>
+            <td>:</td>
+            <td>{{row[12]}}</td>
+        </tr>
+        <tr>
+            <td>Negara Tujuan</td>
+            <td>:</td>
+            <td>{{row[13]}}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td>Protocol</td>
+            <td>:</td>
+            <td>{{row[5]}}</td>
+        </tr>
+        <tr>
+            <td>Arrival Time</td>
+            <td>:</td>
+            <td>{{row[6]}}</td>
+        </tr>
+        <tr>
+            <td>Domain</td>
+            <td>:</td>
+            <td>{{row[7]}}</td>
+        </tr>
+        <tr>
+            <td>Tipe Situs</td>
+            <td>:</td>
+            <td>{{row[12]}}</td>
+        </tr>
+        <tr>
+            <td>Negara Tujuan</td>
+            <td>:</td>
+            <td>{{row[13]}}</td>
+        </tr>
+        <tr>
+            <td>Tipe File</td>
+            <td>:</td>
+            <td>{{row[14]}}</td>
+        </tr>
+        <tr>
+            <td>Ukuran File</td>
+            <td>:</td>
+            <td>{{row[15]}}</td>
+        </tr>
+        <tr>
+            <td>Link</td>
+            <td>:</td>
+            <td>{{row[7]}}{{row[8]}}</td>
+        </tr>
+    {% endif %}
+    
+</table>
+{% endfor %}
+
+

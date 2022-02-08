@@ -1,0 +1,260 @@
+{% extends "base.html"%}
+
+
+{% block title %} Analyzer {% endblock %}
+
+{% block content %}
+    <!-- navbar -->
+    <div>
+        <div class="nav navbar navbar-expand-sm bg-primary navbar-dark">
+            <div class="navbar-nav">
+                <a href="/analyzer" class="nav-item nav-link active">Analyzer</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <div class="ml-auto mt-4 mr-4">
+                <a href="/laporan/{{idWaktu}}"><button class="btn btn-secondary bg-primary" type="button">Download Laporan</button></a>
+        </div>
+    </div>
+
+    <!-- tabel Detail Paket-->
+    <div>
+        <div class="card mt-4 border-primary mb-3" style="margin:0% 1% 1% 1%">
+            <h5 class="card-header">Hasil Analisis Paket</h5>
+            <div id="analyzerPacket" class="card-body">
+                <table id="tblAnalyzerPacket"class="display table table-striped table-bordered table-responsive" style="width: 100%;">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>No.</th>
+                            <th>IP Source</th>
+                            <th>IP Destination</th>
+                            <th>Arrival Time</th>
+                            <th>Protocol</th>
+                            <th>Domain</th>
+                            <th>Tipe Situs</th>
+                            <th>Negara Tujuan</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- isi tabel -->
+                        {% for row in data %}
+                        <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{row[1]}}</td>
+                            <td>{{row[2]}}</td>
+                            <td>{{row[3]}}</td>
+                            <td>{{row[4]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[6]}}</td>
+                            <td>{{row[7]}}</td>
+                            <td><button data-id="{{row[0]}}" class="paketinfo btn btn-primary">Detail</button></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal -->
+    <div>
+        <div class="modal fade" id="paketModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Paket</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bandwidth download upload -->
+    <div>
+        <div class="card mt-4 border-primary mb-3" style="margin:0% 1% 1% 1%">
+        <h5 class="card-header">Bandwidth Download dan Upload</h5>
+            <div id="analyzerBandwidth" class="card-body">
+                <table  id="tblAnalyzerBandwidth" class="display table table-striped table-bordered" style="width: 100%;">
+                    <thead class="bg-primary text-white">
+                        <th>No</th>
+                        <th>Tanggal dan Waktu</th>
+                        <th>Download</th>
+                        <th>Upload</th>
+                    </thead>
+                    <tbody>
+                        {% for row in dataBandwidth %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{row[0]}}</td>
+                                <td>{{row[1]}} Mbps</td>
+                                <td>{{row[2]}} Mbps</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="table-primary">
+                        <tr>
+                            <td colspan="2" class="font-weight-bold text-center">Kecepatan rata-rata</td>
+                            {% for row in dataRata2Bandwidth %}
+                                <td class="font-weight-bold">{{row[0]}} Mbps</td>
+                                <td class="font-weight-bold">{{row[1]}} Mbps</td>
+                            {% endfor %}
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- chart -->
+            <div class="d-flex justify-content-center m-4">
+                <canvas id="myChart" style="width:100%;max-width:900px" ></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 5 situs yang sering dikunjungi -->
+    <div>
+        <div class="card mt-4 border-primary mb-3" style="margin:0% 1% 1% 1%">
+        <h5 class="card-header">10 Domain yang Terdeteksi Paling Banyak</h5>
+            <div id="analyzerSitusSeringDikunjungi" class="card-body">
+                <table  id="tblAnalyzerSitusSeringDikunjungi" class="display table table-striped table-bordered" style="width: 100%;">
+                    <thead class="bg-primary text-white">
+                        <th>No</th>
+                        <th>Jumlah Dikunjungi</th>
+                        <th>Domain</th>
+                        <th>Tipe Situs</th>
+                    </thead>
+                    <tbody>
+                        {% for row in dataWebDikunjungi %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{row[0]}}</td>
+                                <td>{{row[1]}}</td>
+                                <td>{{row[2]}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- analisis bandwidth web -->
+    <div>
+        <div class="card mt-4 border-primary mb-3" style="margin:0% 1% 1% 1%">
+            <h5 class="card-header">10 Domain dengan Traffic Terbanyak</h5>
+            <div id="analyzerBandwidthWeb" class="card-body">
+                <table  id="tblAnalyzerBandwidthWeb" class="display table table-striped table-bordered" style="width: 100%;">
+                    <thead class="bg-primary text-white">
+                        <th>No</th>
+                        <th>Domain</th>
+                        <th>Tipe Situs</th>
+                        <th>Bandwidth</th>
+                    </thead>
+                    <tbody>
+                        {% for row in dataWebMenghabiskanBandwidth %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{row[0]}}</td>
+                                <td>{{row[1]}}</td>
+                                <td>{{row[2]}}</td>
+                                </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- analisis ip menghabiskan bandwidth banyak -->
+    <div>
+        <div class="card mt-4 border-primary mb-3" style="margin:0% 1% 1% 1%">
+            <h5 class="card-header">10 Pengguna yang Menghabiskan Bandwidth</h5>
+            {% for row in dataJumlahPengguna %}
+                <h5 class="mt-2 ml-4">Jumlah Pengguna Aktif yang Terdeteksi : {{row[0]}}</h5>
+            {% endfor %}
+            {% for row in waktu %}
+                {% if idWaktu|string in row[0]|string %}
+                    <h5 class="mt-2 ml-4">Terdeteksi pada : {{row[1]}} ~ {{row[2]}}</h5>
+                {% endif %}
+            {% endfor %}
+            <div id="analyzerIPBandwidth" class="card-body">
+                <table  id="tblAnalyzerIPBandwidth" class="display table table-striped table-bordered" style="width: 100%;">
+                    <thead class="bg-primary text-white">
+                        <th>No</th>
+                        <th>IP</th>
+                        <th>Bandwidth</th>
+                    </thead>
+                    <tbody>
+                        {% for row in dataIPMenghabiskanBandwidth %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{row[0]}}</td>
+                                <td>{{row[1]}}</td>
+                                </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            pengecekan =[0]
+            valDownload =[0]
+            valUpload =[0]
+            {% for value in dataBandwidth %}
+                pengecekan.push('{{loop.index}}')
+                valDownload.push('{{value[1]}}')
+                valUpload.push('{{value[2]}}')
+            {% endfor %}
+
+            new Chart("myChart", {
+                type: "line",
+                data: {
+                    labels:pengecekan,
+                    datasets: [{
+                        label:"Download",
+                        data :valDownload,
+                        borderColor: "blue",
+                        fill:true
+                    },
+                    {
+                        label:"Upload",
+                        data: valUpload,
+                        borderColor: "red",
+                        fill:true
+                    },]
+                },
+                options: {
+                    legend: {
+                        display: true,
+                        position:'right',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Grafik Download dan Upload',
+                        fontSize:20
+                    },
+                    scales:{
+                        xAxes:[{
+                            scaleLabel:{
+                                display:true,
+                                labelString:"Pengecekan",
+                                fontSize:15
+                            },
+                        }],
+                    }
+                },
+            });
+        });
+    </script>
+{% endblock %}

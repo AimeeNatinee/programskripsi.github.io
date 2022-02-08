@@ -1,0 +1,33 @@
+{% extends "base.html"%}
+
+{% block title %} History {% endblock %}
+
+{% block content %}
+    <!--navbar -->
+    <div>
+        <div class="nav navbar navbar-expand-sm bg-primary navbar-dark">
+            <div class="navbar-nav">
+                <a href="/capturer" class="nav-item nav-link">Capturer</a>
+                <a href="/history" class="nav-item nav-link active"> History</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a href="/login" class="nav-item nav-link">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- dropdown dengan link -->
+    <div>
+        <div class="dropdown m-4 ">
+            <button class="btn btn-secondary dropdown-toggle bg-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                Pilih Tanggal dan Waktu Capture
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for row in data %} 
+                    <a class="dropdown-item" href="/history/{{row[0]}}">{{row[1]}} ~ {{row[2]}}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

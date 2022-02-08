@@ -1,0 +1,48 @@
+{% extends "base.html"%}
+
+
+{% block title %} Capturer {% endblock %}
+
+{% block content %}
+    <!-- navbar -->
+    <div>
+        <div class="nav navbar navbar-expand-sm bg-primary navbar-dark">
+            <div class="navbar-nav">
+                <a href="/capturer" class="nav-item nav-link active">Capturer</a>
+                <a href="/history" class="nav-item nav-link"> History</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a href="/login" class="nav-item nav-link">Logout</a>
+            </div>
+        </div>
+    </div>
+    <!-- capture button -->
+    <div>
+        <div class="container-fluid mt-4">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-success btn-lg m-3 btn-start">Start Capture</button>
+                <button type="button" class="btn btn-danger btn-lg m-3 btn-stop">Stop Capture</button>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- detail capture -->
+    <div>
+        <div class="container-fluid d-flex justify-content-center" style="height: 35%;">
+            <div class="card border-dark w-50 overflow-auto">
+                <div class="card-body text-left" >
+                    <div class="capture-log">
+                        <p class="timeStart"></p>
+                        <p class="timeStop"></p>
+                        
+
+                        <p class="packetCaptured"></p>
+                        <p class="countAnalyzer"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

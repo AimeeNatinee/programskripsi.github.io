@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+
+{% block title %} Laporan {% endblock %}
+
+{% block content %}
+    <div class="nav navbar navbar-expand-sm bg-primary navbar-dark">
+        <div class="navbar-nav">
+            <a href="/capturer" class="nav-item nav-link">Capturer</a>
+            <a href="/analyzer/tipeProtokol" class="nav-item nav-link">Analyzer</a>
+            <a href="/laporan" class="nav-item nav-link active">Laporan</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="/login" class="nav-item nav-link">Logout</a>
+        </div>
+    </div>
+
+    <div>
+        <div class="d-flex justify-content-center">
+            <div class="card mt-4" style="width: 40%;">
+                <div class="card-body">
+                    <h5>Buat Laporan</h5>
+                </div>
+                <div class="card-body">
+                    <p>Pilih isi laporan :</p>
+                    <form action="">
+                        <div class="form-check ">
+                            <label class="ml-5 m-2" style="width: 25%;" for="cbTipeProtokol">
+                                <input type="checkbox" name="" id="cbTipeProtokol"> Tipe Protokol
+                            </label>
+                            <label class="m-2" style="width: 25%;" for="cbNegaraTujuan">
+                                <input type="checkbox" name="" id="cbNegaraTujuan"> Negara Tujuan
+                            </label>
+                            <label class="m-2" style="width: 25%;" for="cbTipeSitus">
+                                <input type="checkbox" name="" id="cbTipeSitus"> Tipe Situs
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="ml-5 m-2" style="width: 25%;" for="cbWaktuAkses">
+                                <input type="checkbox" name="" id="cbWaktuAkses"> Waktu Akses
+                            </label>
+                            <label class="m-2" style="width: 25%;" for="cbNamaSitus">
+                                <input type="checkbox" name="" id="cbNamaSitus"> Nama Situs
+                            </label>
+                            <label class="m-2" style="width: 25%;" for="cbUkuranFile">
+                                <input type="checkbox" name="" id="cbUkuranFile"> Ukuran File
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-5" style="margin-left:40%"><i class="fa fa-download"></i> Download</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
